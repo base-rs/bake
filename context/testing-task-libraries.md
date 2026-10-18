@@ -2,7 +2,7 @@
 
 Verify a task library's semantic Rust API, registered Bake interface, and executable composition at their respective boundaries.
 
-Follow [Structuring Bake Tasks in Crates](task-libraries.md) for implementation and command naming. Socketry's [layout guide](https://github.com/socketry/socketry-project-rust/blob/main/context/layout.md) defines where unit and integration tests belong, and its [testing guidance](https://github.com/socketry/socketry-project-rust/blob/main/context/testing.md) defines coverage expectations. Use the `bake-test-rust` context for the shared test commands and CI workflows.
+Follow [Structuring Bake Tasks in Crates](task-libraries.md) for implementation and command naming. Core's [layout guide](https://github.com/core-rs/core-project/blob/main/context/layout.md) defines where unit and integration tests belong, and its [testing guidance](https://github.com/core-rs/core-project/blob/main/context/testing.md) defines coverage expectations. Use the `bake-test` context for the shared test commands and CI workflows.
 
 ## Test semantic operations
 
@@ -44,7 +44,7 @@ For hooks, use a fresh `Registry` and context state to record calls and their ar
 
 Keep a small suite under `bake/tests/` that launches the private executable using `CARGO_BIN_EXE_<binary-name>`. Verify task discovery through `--list`, plus representative command execution, stdout/stderr, and success/failure exit status. A registry-level test complements these checks but does not exercise the process entry point.
 
-Ensure these tests link the task library from the current checkout. Check the resolved dependency graph for a registry copy of the package under development, especially when `socketry-project` supplies tasks transitively. Testing a published copy does not verify local changes to registration or adapters.
+Ensure these tests link the task library from the current checkout. Check the resolved dependency graph for a registry copy of the package under development, especially when `core-project` supplies tasks transitively. Testing a published copy does not verify local changes to registration or adapters.
 
 Keep the private binary small. Its tests establish that the selected libraries compose correctly; the reusable libraries own their detailed behavior tests.
 
