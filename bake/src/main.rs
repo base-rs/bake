@@ -7,7 +7,7 @@ use bake_agent_context as _;
 use bake_cargo as _;
 use bake_license as _;
 use bake_releases as _;
-use bake_test_rust as _;
+use bake_test as _;
 use std::ffi::OsString;
 use std::process::ExitCode;
 

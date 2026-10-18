@@ -2,7 +2,7 @@
 
 Define reusable automation as semantic Rust APIs and expose those operations as Bake tasks with stable command names.
 
-For Socketry projects, follow the [crate and module conventions](https://github.com/socketry/socketry-project-rust/blob/main/context/conventions.md) and [source layout](https://github.com/socketry/socketry-project-rust/blob/main/context/layout.md) provided by `socketry-project`. This guide explains how those conventions apply to Bake task libraries. See [Testing Task Libraries](testing-task-libraries.md) for verification at the library, task, and executable boundaries.
+For Core Rust projects, follow the [crate and module conventions](https://github.com/core-rs/core-project/blob/main/context/conventions.md) and [source layout](https://github.com/core-rs/core-project/blob/main/context/layout.md) provided by `core-project`. This guide explains how those conventions apply to Bake task libraries. See [Testing Task Libraries](testing-task-libraries.md) for verification at the library, task, and executable boundaries.
 
 Bake has two common places for task functions:
 
@@ -58,7 +58,7 @@ Standardize vocabulary, inputs, results, and failure semantics where libraries p
 
 Preserve domain-specific signatures. Add a shared trait when real consumers need interchangeable implementations. Use options structs for coherent sets of options and objects for meaningful state; small operations can remain functions.
 
-Follow Socketry's rule that the crate name supplies the root Rust namespace. Re-export the main API from private implementation modules. Public modules should identify a meaningful part of the domain. Do not add a public wrapper such as `bake_releases::releases` solely to obtain a command prefix.
+Follow Core's rule that the crate name supplies the root Rust namespace. Re-export the main API from private implementation modules. Public modules should identify a meaningful part of the domain. Do not add a public wrapper such as `bake_releases::releases` solely to obtain a command prefix.
 
 ## Expose operations as Bake tasks
 
@@ -126,7 +126,7 @@ For a library crate whose Rust name starts with `bake_`, `#[bake::task]` derives
 | --- | --- |
 | `bake_releases::notes` with `#[bake::task]` | `releases:notes` |
 | `bake_agent_context::install` with `#[bake::task]` | `agent:context:install` |
-| `bake_agent_context::skill_list` with `name = "agent:context:skill:list"` | `agent:context:skill:list` |
+| `bake_agent_context::show` with `name = "agent:context:show"` | `agent:context:show` |
 | `bake_cargo::version::bump` with `#[bake::task]` | `cargo:version:bump` |
 
 The crate supplies the Rust namespace and the default command prefix. An additional public `releases` module would repeat the domain already named by `bake_releases`; likewise, a public `context` module would repeat the final segment of `bake_agent_context`. Keep task placement close to the semantic operations it exposes. Use the default attribute when the defining crate, modules, and function already express the intended task name; use a full explicit name when a meaningful module path would otherwise add an unwanted command segment or the function name does not express the command's semantic form.
@@ -135,7 +135,7 @@ Underscores in module names retain their existing hyphen conversion; function na
 
 Project binary targets keep their existing module-based naming, including binaries whose names start with `bake_`. Cargo identifies those targets through `CARGO_BIN_NAME`. Libraries without the `bake_` prefix also keep module-based naming; their crate name does not become a command prefix.
 
-Use an explicit `name` when a command intentionally differs from the default or needs to remain stable across implementation moves. Explicit names retain their existing behavior: a name containing `:` is used as-is, while a short name receives only its defining module's namespace. Neither receives a new crate-derived prefix. Thus a root function marked `#[bake::task(name = "test")]` still exports `test` from `bake_test_rust`. A function marked `#[bake::task(name = "releases:notes")]` keeps that command from any module.
+Use an explicit `name` when a command intentionally differs from the default or needs to remain stable across implementation moves. Explicit names retain their existing behavior: a name containing `:` is used as-is, while a short name receives only its defining module's namespace. Neither receives a new crate-derived prefix. Thus a root function marked `#[bake::task(name = "test")]` still exports `test` from `bake_test`. A function marked `#[bake::task(name = "releases:notes")]` keeps that command from any module.
 
 The attribute generates argument conversion, a descriptor, and registration. The library depends on `bake` to use these facilities. No additional registration framework or common task-library trait is needed.
 
@@ -168,15 +168,15 @@ The first `cargo bake --regenerate` creates the private `bake/` workspace member
 
 No per-task imports or registration calls are needed. The task attributes and defining modules determine command names. `Registry::discover()` reports an error if two linked crates register the same task name. A crate used only as a normal Rust dependency does not need to expose a Bake executable; Cargo does not run a dependency's binary target when building your application.
 
-The `bake-agent-context` task library provides dependency context discovery and installation in the same executable. Run `cargo bake agent:context:install` to install guidance from resolved dependencies. Follow that package's context for the generated index, skills, and repository-owned agent instructions.
+The `bake-agent-context` task library provides dependency context discovery and installation in the same executable. Run `cargo bake agent:context:install` to install guidance from resolved dependencies. Use `cargo bake agent:context:list` and `cargo bake agent:context:show` to discover guides, and follow that package's context for skills and repository-owned agent instructions.
 
 If ordinary users of a library should not inherit its Bake dependency, put the tasks in a separate companion crate, such as `socketry-executor-bake`. The project's task binary then depends on and references that companion crate instead. This keeps the main library's dependencies smaller, at the cost of one extra package dependency for projects that want its tasks.
 
 ## Use shared project composition
 
-In Socketry repositories, depend on `socketry-project` in the private `bake/` package to obtain the standard development tasks and release hook. Its `cargo:after_version_bump` hook composes license, release-note, and readme updates. Keep this composition in the shared project crate, and keep the local executable focused on project-specific additions. A reusable task library should not depend on `socketry-project` merely to obtain its own development tooling.
+In Core Rust repositories, depend on `core-project` in the private `bake/` package to obtain the standard development tasks and release hook. Its `cargo:after_version_bump` hook composes license, release-note, and readme updates. Keep this composition in the shared project crate, and keep the local executable focused on project-specific additions. A reusable task library should not depend on `core-project` merely to obtain its own development tooling.
 
-During development of a task library, ensure the private executable resolves that library to the current checkout, including when it arrives transitively through `socketry-project`. For example, the root workspace manifest of `bake-releases` can contain:
+During development of a task library, ensure the private executable resolves that library to the current checkout, including when it arrives transitively through `core-project`. For example, the root workspace manifest of `bake-releases` can contain:
 
 ```toml
 [patch.crates-io]
@@ -193,4 +193,4 @@ Review unnamed tasks in `bake_*` libraries when adopting crate-derived namespace
 
 Generated descriptors now carry their complete names before registration, including module namespaces for libraries without a `bake_` prefix and for explicit short names. Review manual registries that previously added those namespaces using `Registry::include`: it still prepends the supplied namespace, so importing an already namespaced descriptor can repeat that prefix. Register the descriptor directly when its inferred name is the intended command.
 
-Then align the task adapters, local dependency resolution, and tests with this guide. Reuse Socketry's layout and testing guidance, and record domain-specific exceptions in the library's own context. Apply the conventions as each library is reviewed; the illustrative APIs above do not imply that all current task libraries have already adopted them.
+Then align the task adapters, local dependency resolution, and tests with this guide. Reuse Core's layout and testing guidance, and record domain-specific exceptions in the library's own context. Apply the conventions as each library is reviewed; the illustrative APIs above do not imply that all current task libraries have already adopted them.

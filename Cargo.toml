@@ -6,7 +6,7 @@ resolver = "3"
 version = "0.20.0"
 edition = "2024"
 license = "MIT"
-repository = "https://github.com/socketry/bake-rust"
+repository = "https://github.com/core-rs/bake"
 
 [workspace.dependencies]
 serde = { version = "1.0", features = ["derive"] }
@@ -25,27 +25,27 @@ manifest = "bake/Cargo.toml"
 reviewers = ["core-rs/maintainers"]
 
 [[workspace.metadata.bake.test.external]]
-repository = "https://github.com/socketry/bake-agent-context-rust"
+repository = "https://github.com/core-rs/bake-agent-context"
 branch = "main"
 
 [[workspace.metadata.bake.test.external]]
-repository = "https://github.com/socketry/bake-cargo-rust"
+repository = "https://github.com/core-rs/bake-cargo"
 branch = "main"
 
 [[workspace.metadata.bake.test.external]]
-repository = "https://github.com/socketry/bake-license-rust"
+repository = "https://github.com/core-rs/bake-license"
 branch = "main"
 
 [[workspace.metadata.bake.test.external]]
-repository = "https://github.com/socketry/bake-readme-rust"
+repository = "https://github.com/core-rs/bake-readme"
 branch = "main"
 
 [[workspace.metadata.bake.test.external]]
-repository = "https://github.com/socketry/bake-releases-rust"
+repository = "https://github.com/core-rs/bake-releases"
 branch = "main"
 
 [[workspace.metadata.bake.test.external]]
-repository = "https://github.com/socketry/bake-test-rust"
+repository = "https://github.com/core-rs/bake-test"
 branch = "main"
 
 [package]

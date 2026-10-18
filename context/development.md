@@ -18,10 +18,10 @@ Bake is a Cargo-compatible task runner inspired by Samuel Williams's Ruby Bake. 
 - src/context.rs: shared state, project root, previous result, nested calls.
 - crates/macros/: task attribute and generated adapters; re-exported by bake.
 - src/bin/cargo-bake/: Cargo discovery and process launcher, shipped in the `bake` package with a separate binary target.
-- [bake-releases-rust](https://github.com/socketry/bake-releases-rust): release-document parsing and reusable notes/update tasks.
-- [bake-cargo-rust](https://github.com/socketry/bake-cargo-rust): Cargo workspace, version, GitHub release, and publishing tasks.
-- [bake-license-rust](https://github.com/socketry/bake-license-rust): license documents and Rust source copyright maintenance.
-- [bake-agent-context-rust](https://github.com/socketry/bake-agent-context-rust): dependency context discovery, inspection, and installation.
+- [bake-releases](https://github.com/core-rs/bake-releases): release-document parsing and reusable notes/update tasks.
+- [bake-cargo](https://github.com/core-rs/bake-cargo): Cargo workspace, version, GitHub release, and publishing tasks.
+- [bake-license](https://github.com/core-rs/bake-license): license documents and Rust source copyright maintenance.
+- [bake-agent-context](https://github.com/core-rs/bake-agent-context): dependency context discovery, inspection, and installation.
 - bake/: this repository's task binary and examples of composition.
 
 The task binary links reusable task libraries through dependencies declared in `bake/Cargo.toml`; each library must be referenced by the executable so its registered tasks are linked into the binary.
@@ -61,7 +61,7 @@ cargo bake --locked greet Samuel --excited true
 cargo bake --locked releases:notes Unreleased
 ```
 
-The private task binary links `bake-test-rust`, which registers `test` and `test:external`. Selected downstream Bake projects are listed in the root `Cargo.toml` under `[workspace.metadata.bake.test.external]`. The external task checks those projects against the local workspace crates and keeps their checkouts under the ignored `external/` directory. The External Tests workflow runs the same task on pushes and pull requests.
+The private task binary links `bake-test`, which registers `test` and `test:external`. Selected downstream Bake projects are listed in the root `Cargo.toml` under `[workspace.metadata.bake.test.external]`. The external task checks those projects against the local workspace crates and keeps their checkouts under the ignored `external/` directory. The External Tests workflow runs the same task on pushes and pull requests.
 
 The Test workflow runs `cargo bake --locked test` on macOS and the coverage task on Ubuntu. Windows runs `cargo test --workspace --locked` directly because the task runner is part of this workspace and Windows cannot replace its executable while it is running. The Ubuntu job also runs formatting and Clippy. Coverage runs workspace and documentation tests, invokes the optional `test:before` hook, and requires 100% line coverage. The External Tests workflow is separate because this workspace lists selected downstream projects in `[workspace.metadata.bake.test.external]`.
 
@@ -69,4 +69,4 @@ Follow the current session's instructions about adding or running tests. Use --o
 
 Inspect actual workflow results before claiming verification on another platform.
 
-For release preparation and registry setup, follow the shared [Releasing skill](https://github.com/socketry/socketry-project-rust/blob/main/context/releasing.md). Publishing must be explicitly requested; ordinary development commands do not release anything.
+For release preparation and registry setup, follow the shared [Releasing skill](https://github.com/core-rs/core-project/blob/main/context/releasing.md). Publishing must be explicitly requested; ordinary development commands do not release anything.
