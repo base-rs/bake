@@ -17,7 +17,7 @@ Bake is a Cargo-compatible task runner inspired by Samuel Williams's Ruby Bake. 
 - src/output.rs: replaceable default output, raw/JSON/NDJSON formatting, and null sink.
 - src/context.rs: shared state, project root, previous result, nested calls.
 - crates/macros/: task attribute and generated adapters; re-exported by bake.
-- crates/cargo-bake/: Cargo discovery and process launcher; independent of the core.
+- src/bin/cargo-bake/: Cargo discovery and process launcher, shipped in the `bake` package with a separate binary target.
 - [bake-releases-rust](https://github.com/socketry/bake-releases-rust): release-document parsing and reusable notes/update tasks.
 - [bake-cargo-rust](https://github.com/socketry/bake-cargo-rust): Cargo workspace, version, GitHub release, and publishing tasks.
 - [bake-license-rust](https://github.com/socketry/bake-license-rust): license documents and Rust source copyright maintenance.
@@ -43,10 +43,10 @@ The task binary links reusable task libraries through dependencies declared in `
 
 ## Useful commands
 
-Install `socketry-cargo-bake` before running the Bake commands below:
+Install the launcher from this checkout before running the Bake commands below:
 
 ```sh
-cargo install socketry-cargo-bake --locked
+cargo install --path . --locked
 ```
 
 ```sh

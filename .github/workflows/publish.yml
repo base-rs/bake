@@ -26,7 +26,7 @@ jobs:
         with:
           components: clippy, rustfmt
       - name: Install Bake launcher
-        run: cargo install socketry-cargo-bake --locked
+        run: cargo install --path . --locked
       - name: Detect a versioned release change
         id: detect
         env:
@@ -60,7 +60,7 @@ jobs:
           fetch-depth: 0
       - uses: dtolnay/rust-toolchain@stable
       - name: Install Bake launcher
-        run: cargo install socketry-cargo-bake --locked
+        run: cargo install --path . --locked
       - name: Find workspace packages that need publishing
         id: packages
         env:
