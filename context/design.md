@@ -2,6 +2,8 @@
 
 ## Cargo owns compilation
 
+The `bake` package ships both the task library and the `cargo-bake` binary. The launcher is a separate binary target with private implementation modules; task libraries continue to depend on the `bake` library.
+
 The cargo-bake executable asks Cargo for workspace metadata, identifies an unpublished task binary, and runs it. The task binary depends on the core and any reusable task libraries through normal Cargo dependencies. Cargo handles builds, dependency resolution, and compiled artifact reuse.
 
 This follows the practical direction of Aaron Turon's [2018 workflow proposal](https://aturon.github.io/tech/2018/04/05/workflows/) and the [xtask pattern](https://github.com/matklad/cargo-xtask). It uses Cargo's existing custom commands and metadata; a native Cargo tasks table is unnecessary.

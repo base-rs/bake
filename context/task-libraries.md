@@ -27,7 +27,7 @@ project/
 Install the launcher once and bootstrap the task crate with:
 
 ```sh
-cargo install socketry-cargo-bake --locked
+cargo install bake --locked
 cargo bake --regenerate
 ```
 

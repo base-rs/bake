@@ -6,10 +6,10 @@ This is an initial implementation inspired by [Ruby Bake](https://github.com/ioq
 
 ## Try this repository
 
-Install the `socketry-cargo-bake` launcher from this checkout, then run the project tasks:
+Install the `cargo-bake` launcher from this checkout, then run the project tasks:
 
 ```sh
-cargo install --path crates/cargo-bake --locked
+cargo install --path . --locked
 cargo bake --list
 cargo bake greet Samuel --excited true --labels Rust
 cargo bake greet --help
@@ -21,11 +21,13 @@ cargo bake license:update
 
 The task crate is [bake/](bake/src/main.rs). Cargo compiles it on demand and caches the build. `--offline` and `--locked` are available before the task name.
 
-The executable is `cargo-bake`; Cargo makes it available as `cargo bake`. The core library package is `bake`, and the launcher package is `socketry-cargo-bake`. To install the published launcher:
+The `bake` package provides both the task library and the `cargo-bake` executable, available as `cargo bake`. To install the launcher:
 
 ```sh
-cargo install socketry-cargo-bake
+cargo install bake --locked
 ```
+
+When migrating from `socketry-cargo-bake`, run `cargo uninstall socketry-cargo-bake` before installing the launcher from `bake`; both packages provide the same executable.
 
 The earlier `socketry-bake` package remains available for existing projects; use `bake` for new projects.
 
@@ -181,9 +183,8 @@ Launcher options (`--manifest-path PATH`, `--offline`, `--locked`, `--release`) 
 
 | Published package | Rust library / executable | Purpose |
 | --- | --- | --- |
-| `bake` | `bake` | Registry, arguments, context, task result handling |
+| `bake` | `bake` / `cargo-bake` | Task library, project discovery, and Cargo launcher |
 | `bake-macros` | `bake_macros` | Function attribute, re-exported by `bake` |
-| `socketry-cargo-bake` | `cargo-bake` | Project discovery and Cargo launcher |
 | `bake-releases` | `bake_releases` | Release-document tasks ([repository](https://github.com/socketry/bake-releases-rust)) |
 | `bake-cargo` | `bake_cargo` | Cargo project and release tasks ([repository](https://github.com/socketry/bake-cargo-rust)) |
 | `bake-license` | `bake_license` | License and copyright maintenance tasks ([repository](https://github.com/socketry/bake-license-rust)) |

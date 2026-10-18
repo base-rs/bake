@@ -1,5 +1,9 @@
 # Releases
 
+## Unreleased
+
+- Ship the `cargo-bake` launcher in the `bake` package, installed with `cargo install bake --locked`. Stop publishing a separate `socketry-cargo-bake` package; existing users should uninstall it before installing the combined package.
+
 ## v0.19.2
 
 - Give `Parameter` and `OutputFormat` dedicated source files; preserve `Format` as a compatibility alias and refresh dependency setup examples.

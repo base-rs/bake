@@ -57,11 +57,7 @@ fn project(task_directory: &str, workspace_configuration: &str) -> TempDir {
 }
 
 fn bake_source_root() -> PathBuf {
-    Path::new(env!("CARGO_MANIFEST_DIR"))
-        .ancestors()
-        .nth(2)
-        .unwrap()
-        .to_path_buf()
+    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
 }
 
 fn launch(directory: &Path, arguments: &[&str]) -> Output {
@@ -439,13 +435,7 @@ fn regenerate_bootstraps_the_task_crate_and_refreshes_dependency_links() {
             .contains("members = [\"task-provider\", \"bake\"]")
     );
 
-    let bake_path = Path::new(env!("CARGO_MANIFEST_DIR"))
-        .parent()
-        .unwrap()
-        .parent()
-        .unwrap()
-        .to_string_lossy()
-        .replace('\\', "/");
+    let bake_path = bake_root.to_string_lossy().replace('\\', "/");
     let task_manifest_contents = format!(
         "[package]\nname = \"project-bake\"\nversion = \"0.0.0\"\nedition = \"2024\"\npublish = false\ndefault-run = \"tasks\"\n\n[dependencies]\nbake = {{ version = \"{}\", path = \"{}\" }}\ntask-provider = {{ path = \"../task-provider\" }}\n",
         env!("CARGO_PKG_VERSION"),
