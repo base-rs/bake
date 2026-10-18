@@ -22,7 +22,7 @@ toml_edit = "0.25"
 manifest = "bake/Cargo.toml"
 
 [workspace.metadata.bake.release]
-reviewers = ["socketry/managers"]
+reviewers = ["core-rs/maintainers"]
 
 [[workspace.metadata.bake.test.external]]
 repository = "https://github.com/socketry/bake-agent-context-rust"
