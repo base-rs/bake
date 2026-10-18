@@ -19,7 +19,7 @@ dependencies = [
 
 [[package]]
 name = "bake"
-version = "0.19.2"
+version = "0.20.0"
 dependencies = [
  "bake-macros",
  "linkme",
@@ -72,7 +72,7 @@ dependencies = [
 
 [[package]]
 name = "bake-macros"
-version = "0.19.2"
+version = "0.20.0"
 dependencies = [
  "proc-macro2",
  "quote",

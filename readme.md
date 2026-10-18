@@ -204,6 +204,10 @@ Prepare a release with `cargo bake cargo:version:patch` (or `minor`, `major`, or
 
 See [releases.md](releases.md) for the full release history.
 
+### v0.20.0
+
+- Ship the `cargo-bake` launcher in the `bake` package, installed with `cargo install bake --locked`. Stop publishing a separate `socketry-cargo-bake` package; existing users should uninstall it before installing the combined package.
+
 ### v0.19.2
 
 - Give `Parameter` and `OutputFormat` dedicated source files; preserve `Format` as a compatibility alias and refresh dependency setup examples.
@@ -217,10 +221,6 @@ See [releases.md](releases.md) for the full release history.
 - Require the aggregate test and coverage result for pull request merges.
 
 - Refresh dependency examples and repository-owned agent guidance.
-
-### v0.19.0
-
-- Support unbounded positional `Vec<T>` task arguments with `#[bake(positional)]`. Require `::` before chaining another task.
 
 <!-- bake-readme:releases:end -->
 

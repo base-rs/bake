@@ -1,6 +1,6 @@
 # Releases
 
-## Unreleased
+## v0.20.0
 
 - Ship the `cargo-bake` launcher in the `bake` package, installed with `cargo install bake --locked`. Stop publishing a separate `socketry-cargo-bake` package; existing users should uninstall it before installing the combined package.
 
