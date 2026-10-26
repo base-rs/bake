@@ -2,7 +2,7 @@
 
 Define reusable automation as semantic Rust APIs and expose those operations as Bake tasks with stable command names.
 
-For Core Rust projects, follow the [crate and module conventions](https://github.com/core-rs/core-project/blob/main/context/conventions.md) and [source layout](https://github.com/core-rs/core-project/blob/main/context/layout.md) provided by `core-project`. This guide explains how those conventions apply to Bake task libraries. See [Testing Task Libraries](testing-task-libraries.md) for verification at the library, task, and executable boundaries.
+For Base Rust projects, follow the [crate and module conventions](https://github.com/base-rs/base-project/blob/main/context/conventions.md) and [source layout](https://github.com/base-rs/base-project/blob/main/context/layout.md) provided by `base-project`. This guide explains how those conventions apply to Bake task libraries. See [Testing Task Libraries](testing-task-libraries.md) for verification at the library, task, and executable boundaries.
 
 Bake has two common places for task functions:
 
@@ -58,7 +58,7 @@ Standardize vocabulary, inputs, results, and failure semantics where libraries p
 
 Preserve domain-specific signatures. Add a shared trait when real consumers need interchangeable implementations. Use options structs for coherent sets of options and objects for meaningful state; small operations can remain functions.
 
-Follow Core's rule that the crate name supplies the root Rust namespace. Re-export the main API from private implementation modules. Public modules should identify a meaningful part of the domain. Do not add a public wrapper such as `bake_releases::releases` solely to obtain a command prefix.
+Follow Base's rule that the crate name supplies the root Rust namespace. Re-export the main API from private implementation modules. Public modules should identify a meaningful part of the domain. Do not add a public wrapper such as `bake_releases::releases` solely to obtain a command prefix.
 
 ## Expose operations as Bake tasks
 
@@ -174,9 +174,9 @@ If ordinary users of a library should not inherit its Bake dependency, put the t
 
 ## Use shared project composition
 
-In Core Rust repositories, depend on `core-project` in the private `bake/` package to obtain the standard development tasks and release hook. Its `cargo:after_version_bump` hook composes license, release-note, and readme updates. Keep this composition in the shared project crate, and keep the local executable focused on project-specific additions. A reusable task library should not depend on `core-project` merely to obtain its own development tooling.
+In Base Rust repositories, depend on `base-project` in the private `bake/` package to obtain the standard development tasks and release hook. Its `cargo:after_version_bump` hook composes license, release-note, and readme updates. Keep this composition in the shared project crate, and keep the local executable focused on project-specific additions. A reusable task library should not depend on `base-project` merely to obtain its own development tooling.
 
-During development of a task library, ensure the private executable resolves that library to the current checkout, including when it arrives transitively through `core-project`. For example, the root workspace manifest of `bake-releases` can contain:
+During development of a task library, ensure the private executable resolves that library to the current checkout, including when it arrives transitively through `base-project`. For example, the root workspace manifest of `bake-releases` can contain:
 
 ```toml
 [patch.crates-io]
@@ -193,4 +193,4 @@ Review unnamed tasks in `bake_*` libraries when adopting crate-derived namespace
 
 Generated descriptors now carry their complete names before registration, including module namespaces for libraries without a `bake_` prefix and for explicit short names. Review manual registries that previously added those namespaces using `Registry::include`: it still prepends the supplied namespace, so importing an already namespaced descriptor can repeat that prefix. Register the descriptor directly when its inferred name is the intended command.
 
-Then align the task adapters, local dependency resolution, and tests with this guide. Reuse Core's layout and testing guidance, and record domain-specific exceptions in the library's own context. Apply the conventions as each library is reviewed; the illustrative APIs above do not imply that all current task libraries have already adopted them.
+Then align the task adapters, local dependency resolution, and tests with this guide. Reuse Base's layout and testing guidance, and record domain-specific exceptions in the library's own context. Apply the conventions as each library is reviewed; the illustrative APIs above do not imply that all current task libraries have already adopted them.

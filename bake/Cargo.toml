@@ -5,8 +5,8 @@ edition.workspace = true
 publish = false
 
 [dependencies]
-core-project = ">=0.2.0"
-bake = { version = "0.20.0", path = ".." }
+base-project = ">=0.1.0"
+bake = { version = "0.20.1", path = ".." }
 bake-agent-context = { version = "0.4.0" }
 bake-test = { version = "0.3.3" }
 bake-releases = { version = "0.3.5" }
