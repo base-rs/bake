@@ -148,7 +148,7 @@ use bake_releases as _;
 bake::Registry::discover()?.run()
 ```
 
-This removes per-task registration and namespace boilerplate. Explicit `Registry::register` and `Registry::include` remain available when a project needs to assemble names dynamically. Duplicate discovered names are errors. The [Bake Releases](https://github.com/core-rs/bake-releases) library provides:
+This removes per-task registration and namespace boilerplate. Explicit `Registry::register` and `Registry::include` remain available when a project needs to assemble names dynamically. Duplicate discovered names are errors. The [Bake Releases](https://github.com/base-rs/bake-releases) library provides:
 
 ```sh
 cargo bake releases:notes Unreleased
@@ -158,9 +158,9 @@ cargo bake releases:notes v0.1.0 --path releases.md
 
 `update` renames the `Unreleased` heading in the file. It does not change package versions, commit, tag, or publish. Release headings use the documented ATX format such as `## v0.1.0`.
 
-The companion [Bake Cargo](https://github.com/core-rs/bake-cargo) library provides Cargo workspace tasks, GitHub release creation, publishing workflow generation, GitHub release protections, and crates.io trusted publishers. Its shared version tasks optionally invoke `cargo:after_version_bump` with the new version. Core Rust projects use `core-project` in their private task package to supply the shared hook for license, release-note, and readme updates. `cargo:release` validates and packages a candidate for a reviewed release pull request. After the pull request merges, the workflow waits for the `crates-io` environment approval, publishes the workspace through trusted publishing, and creates the `vVERSION` tag after all uploads succeed. The initial publish can be followed by trusted-publisher setup with the explicit `cargo:bootstrap PACKAGE` task. Review its effects and package contents before invoking it.
+The companion [Bake Cargo](https://github.com/base-rs/bake-cargo) library provides Cargo workspace tasks, GitHub release creation, publishing workflow generation, GitHub release protections, and crates.io trusted publishers. Its shared version tasks optionally invoke `cargo:after_version_bump` with the new version. Base Rust projects use `base-project` in their private task package to supply the shared hook for license, release-note, and readme updates. `cargo:release` validates and packages a candidate for a reviewed release pull request. After the pull request merges, the workflow waits for the `crates-io` environment approval, publishes the workspace through trusted publishing, and creates the `vVERSION` tag after all uploads succeed. The initial publish can be followed by trusted-publisher setup with the explicit `cargo:bootstrap PACKAGE` task. Review its effects and package contents before invoking it.
 
-The separately reusable [Bake License](https://github.com/core-rs/bake-license) library tracks Git authorship, refreshes `license.md`, removes the README License section, and updates Rust source copyright headers.
+The separately reusable [Bake License](https://github.com/base-rs/bake-license) library tracks Git authorship, refreshes `license.md`, removes the README License section, and updates Rust source copyright headers.
 
 See the [task library guide](context/task-libraries.md) for more details on structuring and using reusable task libraries.
 
@@ -185,10 +185,10 @@ Launcher options (`--manifest-path PATH`, `--offline`, `--locked`, `--release`) 
 | --- | --- | --- |
 | `bake` | `bake` / `cargo-bake` | Task library, project discovery, and Cargo launcher |
 | `bake-macros` | `bake_macros` | Function attribute, re-exported by `bake` |
-| `bake-releases` | `bake_releases` | Release-document tasks ([repository](https://github.com/core-rs/bake-releases)) |
-| `bake-cargo` | `bake_cargo` | Cargo project and release tasks ([repository](https://github.com/core-rs/bake-cargo)) |
-| `bake-license` | `bake_license` | License and copyright maintenance tasks ([repository](https://github.com/core-rs/bake-license)) |
-| `bake-agent-context` | `bake_agent_context` | Dependency context tasks ([repository](https://github.com/core-rs/bake-agent-context)) |
+| `bake-releases` | `bake_releases` | Release-document tasks ([repository](https://github.com/base-rs/bake-releases)) |
+| `bake-cargo` | `bake_cargo` | Cargo project and release tasks ([repository](https://github.com/base-rs/bake-cargo)) |
+| `bake-license` | `bake_license` | License and copyright maintenance tasks ([repository](https://github.com/base-rs/bake-license)) |
+| `bake-agent-context` | `bake_agent_context` | Dependency context tasks ([repository](https://github.com/base-rs/bake-agent-context)) |
 
 For local development of the task binary, check out the task repositories beside this repository as `../bake-releases`, `../bake-cargo`, and `../bake-license`.
 
@@ -196,13 +196,17 @@ Tasks are synchronous in this initial implementation. An individual task can sta
 
 ## Releasing
 
-Prepare a release with `cargo bake cargo:version:patch` (or `minor`, `major`, or `bump --version X.Y.Z`), commit with a `Release: vVERSION` trailer, then run `cargo bake cargo:release` and open a pull request. After review and merge, GitHub Actions publishes the release when the configured `crates-io` environment approves it. Follow the shared [Releasing skill](https://github.com/core-rs/core-project/blob/main/context/releasing.md) for the standard process.
+Prepare a release with `cargo bake cargo:version:patch` (or `minor`, `major`, or `bump --version X.Y.Z`), commit with a `Release: vVERSION` trailer, then run `cargo bake cargo:release` and open a pull request. After review and merge, GitHub Actions publishes the release when the configured `crates-io` environment approves it. Follow the shared [Releasing skill](https://github.com/base-rs/base-project/blob/main/context/releasing.md) for the standard process.
 
 ## Releases
 
 <!-- bake-readme:releases:start -->
 
 See [releases.md](releases.md) for the full release history.
+
+### v0.20.1
+
+- Update project tooling, repository links, and task-library guidance for the `base-rs` organization and `base-project`.
 
 ### v0.20.0
 
@@ -212,26 +216,16 @@ See [releases.md](releases.md) for the full release history.
 
 - Give `Parameter` and `OutputFormat` dedicated source files; preserve `Format` as a compatibility alias and refresh dependency setup examples.
 
-### v0.19.1
-
-- Keep generated dependency skills out of the tracked repository.
-
-- Adopt `socketry-project` 0.3.7 for shared project tasks and Markdown normalization.
-
-- Require the aggregate test and coverage result for pull request merges.
-
-- Refresh dependency examples and repository-owned agent guidance.
-
 <!-- bake-readme:releases:end -->
 
 ## See Also
 
-- [`core-project`](https://github.com/core-rs/core-project).
-- [`bake-agent-context`](https://github.com/core-rs/bake-agent-context).
+- [`base-project`](https://github.com/base-rs/base-project).
+- [`bake-agent-context`](https://github.com/base-rs/bake-agent-context).
 
 ## Contributing
 
-Please open an issue or pull request on [GitHub](https://github.com/core-rs/bake).
+Please open an issue or pull request on [GitHub](https://github.com/base-rs/bake).
 
 ### Agent Context
 

@@ -18,10 +18,10 @@ Bake is a Cargo-compatible task runner inspired by Samuel Williams's Ruby Bake. 
 - src/context.rs: shared state, project root, previous result, nested calls.
 - crates/macros/: task attribute and generated adapters; re-exported by bake.
 - src/bin/cargo-bake/: Cargo discovery and process launcher, shipped in the `bake` package with a separate binary target.
-- [bake-releases](https://github.com/core-rs/bake-releases): release-document parsing and reusable notes/update tasks.
-- [bake-cargo](https://github.com/core-rs/bake-cargo): Cargo workspace, version, GitHub release, and publishing tasks.
-- [bake-license](https://github.com/core-rs/bake-license): license documents and Rust source copyright maintenance.
-- [bake-agent-context](https://github.com/core-rs/bake-agent-context): dependency context discovery, inspection, and installation.
+- [bake-releases](https://github.com/base-rs/bake-releases): release-document parsing and reusable notes/update tasks.
+- [bake-cargo](https://github.com/base-rs/bake-cargo): Cargo workspace, version, GitHub release, and publishing tasks.
+- [bake-license](https://github.com/base-rs/bake-license): license documents and Rust source copyright maintenance.
+- [bake-agent-context](https://github.com/base-rs/bake-agent-context): dependency context discovery, inspection, and installation.
 - bake/: this repository's task binary and examples of composition.
 
 The task binary links reusable task libraries through dependencies declared in `bake/Cargo.toml`; each library must be referenced by the executable so its registered tasks are linked into the binary.
@@ -69,4 +69,4 @@ Follow the current session's instructions about adding or running tests. Use --o
 
 Inspect actual workflow results before claiming verification on another platform.
 
-For release preparation and registry setup, follow the shared [Releasing skill](https://github.com/core-rs/core-project/blob/main/context/releasing.md). Publishing must be explicitly requested; ordinary development commands do not release anything.
+For release preparation and registry setup, follow the shared [Releasing skill](https://github.com/base-rs/base-project/blob/main/context/releasing.md). Publishing must be explicitly requested; ordinary development commands do not release anything.

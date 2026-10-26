@@ -28,4 +28,4 @@ Tasks accept owned FromStr arguments and an optional context reference. They ret
 a Result with a serializable successful value and a displayable error. The macro
 rejects async, unsafe, foreign, generic, variadic, and receiver-based signatures.
 
-See the [workspace documentation](https://github.com/core-rs/bake) for examples.
+See the [workspace documentation](https://github.com/base-rs/bake) for examples.
