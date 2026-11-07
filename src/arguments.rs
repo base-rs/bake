@@ -13,7 +13,7 @@ where
     value.parse().map_err(|error| {
         Error::new(format!(
             "invalid {} value {value:?}: {error}",
-            std::any::type_name::<Value>()
+            crate::parameter::type_name::<Value>()
         ))
     })
 }

@@ -9,7 +9,7 @@ use std::str::FromStr;
 /// A task parameter. Names use underscores; command-line flags also accept hyphens.
 pub struct Parameter {
     pub(crate) name: String,
-    pub(crate) type_name: &'static str,
+    pub(crate) type_name: String,
     pub(crate) positional: bool,
     pub(crate) required: bool,
     pub(crate) repeated: bool,
@@ -26,7 +26,7 @@ impl Parameter {
     {
         Self {
             name: name.into(),
-            type_name: std::any::type_name::<Value>(),
+            type_name: type_name::<Value>(),
             positional: true,
             required: true,
             repeated: false,
@@ -68,5 +68,41 @@ impl Parameter {
     }
     pub fn name(&self) -> &str {
         &self.name
+    }
+}
+
+/// A type's name without module paths, such as `Option<String>` for `core::option::Option<alloc::string::String>`, for help and error text.
+pub(crate) fn type_name<Value>() -> String {
+    short_type_name(std::any::type_name::<Value>())
+}
+
+fn short_type_name(name: &str) -> String {
+    let mut short = String::with_capacity(name.len());
+    let mut path = String::new();
+    for character in name.chars().chain(std::iter::once('\0')) {
+        if character.is_alphanumeric() || matches!(character, '_' | ':') {
+            path.push(character);
+            continue;
+        }
+        short.push_str(path.rsplit("::").next().unwrap_or_default());
+        path.clear();
+        if character != '\0' {
+            short.push(character);
+        }
+    }
+    short
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn type_names_omit_module_paths() {
+        assert_eq!(type_name::<String>(), "String");
+        assert_eq!(type_name::<std::path::PathBuf>(), "PathBuf");
+        assert_eq!(type_name::<Option<Vec<String>>>(), "Option<Vec<String>>");
+        assert_eq!(type_name::<(u32, &str)>(), "(u32, &str)");
+        assert_eq!(short_type_name(""), "");
     }
 }
