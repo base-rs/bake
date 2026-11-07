@@ -1,5 +1,9 @@
 # Releases
 
+## Unreleased
+
+- Show parameter types without module paths in task help and argument errors, such as `String` instead of `alloc::string::String`.
+
 ## v0.20.1
 
 - Update project tooling, repository links, and task-library guidance for the `base-rs` organization and `base-project`.

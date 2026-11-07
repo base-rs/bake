@@ -523,11 +523,9 @@ mod tests {
         registry.register(inspection_task()).unwrap();
 
         let help = registry.help(Some("inspect")).unwrap();
-        assert!(help.contains("name: alloc::string::String (positional, required)"));
+        assert!(help.contains("name: String (positional, required)"));
         assert!(help.contains("--excited value: bool (named, optional, default: false)"));
-        assert!(
-            help.contains("--label value: alloc::string::String (named, optional, repeatable)")
-        );
+        assert!(help.contains("--label value: String (named, optional, repeatable)"));
         assert!(help.contains("Repeat this option."));
 
         assert_eq!(
