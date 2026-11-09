@@ -1,3 +1,8 @@
+# SECURITY: Actions are pinned to release tags, not commit SHAs, so whoever controls an
+# action could move its tag and run new code in jobs that hold `id-token` or `contents`
+# write permissions. This is accepted because each action comes from GitHub, the Rust
+# project, or the maintainer of `dtolnay/rust-toolchain`, who already control the runner,
+# the toolchain, or the publishing this workflow trusts; pin them to SHAs if that changes.
 name: Publish to crates.io
 
 on:
@@ -22,9 +27,13 @@ jobs:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
+          persist-credentials: false
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: clippy, rustfmt
+      # Unlike the generated template, which pins the published launcher, this repository builds the launcher from the
+      # reviewed checkout: the task package links this checkout's `bake` library, which an older published launcher
+      # may not support, and the launcher being released must itself be the one checked.
       - name: Install Bake launcher
         run: cargo install --path . --locked
       - name: Detect an explicit release request
@@ -58,7 +67,11 @@ jobs:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
+          persist-credentials: false
       - uses: dtolnay/rust-toolchain@stable
+      # Unlike the generated template, which pins the published launcher, this repository builds the launcher from the
+      # reviewed checkout: the task package links this checkout's `bake` library, which an older published launcher
+      # may not support, and the launcher being released must itself be the one checked.
       - name: Install Bake launcher
         run: cargo install --path . --locked
       - name: Find workspace packages that need publishing
