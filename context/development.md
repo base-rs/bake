@@ -11,9 +11,9 @@ Bake is a Cargo-compatible task runner inspired by Samuel Williams's Ruby Bake. 
 - src/arguments.rs: typed validation and command-line parsing.
 - src/parameter.rs: task parameter metadata and builders.
 - src/task.rs: task descriptor and handler interface.
-- src/task\_name.rs: constant-evaluated crate and module namespace inference.
+- src/task_name.rs: constant-evaluated crate and module namespace inference.
 - src/registry.rs: registration, namespace imports, command planning, help and output.
-- src/output\_format.rs: supported output formats and their names.
+- src/output_format.rs: supported output formats and their names.
 - src/output.rs: replaceable default output, raw/JSON/NDJSON formatting, and null sink.
 - src/context.rs: shared state, project root, previous result, nested calls.
 - crates/macros/: task attribute and generated adapters; re-exported by bake.

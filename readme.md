@@ -204,6 +204,11 @@ Prepare a release with `cargo bake cargo:release:patch` (or `minor`, `major`, or
 
 See [releases.md](releases.md) for the full release history.
 
+### v0.20.2
+
+- Show parameter types without module paths in task help and argument errors, such as `String` instead of `alloc::string::String`.
+- Declare Rust 1.88 as the minimum supported version of `bake` and `bake-macros` in `rust-version`, for the let-chains in `bake-macros`, and check it in CI.
+
 ### v0.20.1
 
 - Update project tooling, repository links, and task-library guidance for the `base-rs` organization and `base-project`.
@@ -211,10 +216,6 @@ See [releases.md](releases.md) for the full release history.
 ### v0.20.0
 
 - Ship the `cargo-bake` launcher in the `bake` package, installed with `cargo install bake --locked`. Stop publishing a separate `socketry-cargo-bake` package; existing users should uninstall it before installing the combined package.
-
-### v0.19.2
-
-- Give `Parameter` and `OutputFormat` dedicated source files; preserve `Format` as a compatibility alias and refresh dependency setup examples.
 
 <!-- bake-readme:releases:end -->
 
