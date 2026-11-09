@@ -1,6 +1,6 @@
 # Releases
 
-## Unreleased
+## v0.20.2
 
 - Show parameter types without module paths in task help and argument errors, such as `String` instead of `alloc::string::String`.
 - Declare Rust 1.88 as the minimum supported version of `bake` and `bake-macros` in `rust-version`, for the let-chains in `bake-macros`, and check it in CI.

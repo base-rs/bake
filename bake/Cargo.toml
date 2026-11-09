@@ -6,7 +6,7 @@ publish = false
 
 [dependencies]
 base-project = ">=0.1.8"
-bake = { version = "0.20.1", path = ".." }
+bake = { version = "0.20.2", path = ".." }
 bake-agent-context = { version = "0.4.3" }
 bake-test = { version = "0.3.7" }
 bake-releases = { version = "0.3.7" }
